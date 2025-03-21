@@ -1,0 +1,13 @@
+$ORIGIN m1-9.ephec-ti.be.
+$TTL 86400
+
+@	IN	SOA	ns	admin.m1-9.ephec-ti.be (
+				2025032001 ; serial
+				21600 ; refresh
+				3600 ; retry
+				604800 ; expire
+				86400 ; min TTL
+)
+	IN	NS	ns
+ns	IN	A	54.36.181.34
+www	IN	A	54.36.181.34
