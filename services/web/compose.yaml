@@ -1,0 +1,27 @@
+services:
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    container_name: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/html:/var/www/html
+  mariadb:
+    image: mariadb:latest
+    container_name: mariadb
+    env_file:
+      - ./mariadb/.env
+    volumes:
+      - mariadb_data:/var/lib/mysql
+  php:
+    build:
+      context: ./php
+      dockerfile: Dockerfile
+    container_name: php
+    volumes:
+      - ./nginx/html/www:/var/www/html/www
+
+volumes:
+  mariadb_data:
