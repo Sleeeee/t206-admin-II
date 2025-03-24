@@ -11,6 +11,13 @@ services:
       - bind_cache:/var/cache/bind
       - ./bind/named.conf:/etc/bind/named.conf
       - ./bind/m1-9.zone:/etc/bind/m1-9.zone
+  nginx:
+    build:
+      context: ./web/nginx
+      dockerfile: Dockerfile
+    container_name: nginx
+    ports:
+      - "80:80"
 
 volumes:
   bind_cache:
