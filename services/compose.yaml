@@ -18,6 +18,23 @@ services:
     container_name: nginx
     ports:
       - "80:80"
+    volumes:
+      - ./web/nginx/html:/var/www/html
+  mariadb:
+    image: mariadb:latest
+    container_name: mariadb
+    env_file:
+      - ./web/mariadb/.env
+    volumes:
+      - mariadb_data:/var/lib/mysql
+  php:
+    build:
+      context: ./web/php
+      dockerfile: Dockerfile
+    container_name: php
+    volumes:
+      - ./web/nginx/html/www:/var/www/html/www
 
 volumes:
   bind_cache:
+  mariadb_data:
