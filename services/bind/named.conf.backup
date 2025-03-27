@@ -11,7 +11,7 @@ options {
 zone "m1-9.ephec-ti.be." {
     type master;
     file "/etc/bind/m1-9.zone";
-    allow-transfer { 54.36.183.174; };
+    allow-transfer { none; };
     inline-signing yes;
     dnssec-policy default;
 };

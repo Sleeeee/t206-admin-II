@@ -6,22 +6,40 @@ services:
     container_name: nginx
     ports:
       - "80:80"
+      - "443:443"
     volumes:
       - ./nginx/html:/var/www/html
+    networks:
+      - dmz
+
   mariadb:
-    image: mariadb:latest
+    image: mariadb:11.7
     container_name: mariadb
     env_file:
-      - ./mariadb/.env
+      - ./.env.db
+      - ./mariadb/.env.root
     volumes:
       - mariadb_data:/var/lib/mysql
+      - ./mariadb/my-resolve.cnf:/etc/mysql/conf.d/my-resolve.cnf
+    networks:
+      - db_net
+  
   php:
     build:
       context: ./php
       dockerfile: Dockerfile
     container_name: php
+    env_file:
+      - ./.env.db
     volumes:
       - ./nginx/html/www:/var/www/html/www
+    networks:
+      - dmz
+      - db_net
 
 volumes:
   mariadb_data:
+
+networks:
+  dmz:
+  db_net:

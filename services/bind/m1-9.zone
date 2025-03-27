@@ -1,14 +1,15 @@
 $ORIGIN m1-9.ephec-ti.be.
 $TTL 86400
 
-@	IN	SOA	ns	admin.m1-9.ephec-ti.be (
-				2025032401 ; serial
-				21600 ; refresh
-				3600 ; retry
-				604800 ; expire
-				86400 ; min TTL
+@    IN    SOA    ns1.m1-9.ephec-ti.be. admin.m1-9.ephec-ti.be. (
+              2025032501 ; serial
+              21600 ; refresh
+              3600 ; retry
+              604800 ; expire
+              86400 ; min TTL
 )
-	IN	NS	ns
-ns	IN	A	54.36.181.34
-www	IN	A	54.36.181.34
-blog	IN	CNAME	www.m1-9.ephec-ti.be.
+    IN    NS    ns1.m1-9.ephec-ti.be.
+    IN    NS    ns2.m1-9.ephec-ti.be.
+ns1 IN    A     54.36.181.34
+ns2 IN    A     54.36.183.174
+www IN    A     54.36.183.174
