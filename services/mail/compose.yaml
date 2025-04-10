@@ -1,0 +1,25 @@
+services:
+  mailserver:
+    image: ghcr.io/docker-mailserver/docker-mailserver:latest
+    container_name: mailserver
+    hostname: mail.m1-9.ephec-ti.be
+    env_file: mailserver.env
+    ports:
+      - "25:25"    # SMTP
+      - "143:143"  # IMAP4
+      - "465:465"  # ESMTP
+      - "587:587"  # ESMTP
+      - "993:993"  # IMAP4
+    volumes:
+      - ./docker-data/dms/mail-data/:/var/mail/
+      - ./docker-data/dms/mail-state/:/var/mail-state/
+      - ./docker-data/dms/mail-logs/:/var/log/mail/
+      - ./docker-data/dms/config/:/tmp/docker-mailserver/
+      - /etc/localtime:/etc/localtime:ro
+      - ../../letsencrypt/:/etc/letsencrypt/
+    restart: always
+    stop_grace_period: 1m
+    healthcheck:
+      test: "ss --listening --tcp | grep -P 'LISTEN.+:smtp' || exit 1"
+      timeout: 3s
+      retries: 0
