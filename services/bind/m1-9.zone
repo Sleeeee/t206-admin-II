@@ -2,18 +2,24 @@ $ORIGIN m1-9.ephec-ti.be.
 $TTL 86400
 
 @	IN	SOA	ns	admin.m1-9.ephec-ti.be. (
-				2025040903 ; serial
+				2025050601 ; serial
 				21600 ; refresh
 				3600 ; retry
 				604800 ; expire
 				86400 ; min TTL
 )
         IN      NS      ns
+	IN	NS	ns2
 ns      IN      A       54.36.181.34
-www	IN	A	54.36.181.34
+ns2	IN	A	54.36.183.174
+www	150	IN	A	54.36.181.34
+www	150	IN	A	54.26.182.6
+www	150	IN	A	54.36.183.174
 mail    IN      A       54.36.181.34
+mail2	IN	A	54.36.182.6
 blog	IN	CNAME	www.m1-9.ephec-ti.be.
 @       IN      MX 	10 mail.m1-9.ephec-ti.be.
+@	IN	MX	20 mail2.m1-9.ephec-ti.be.
 @	 IN 	TXT 	"v=spf1 mx -all"
 mail._domainkey	IN	TXT	( "v=DKIM1; h=sha256; k=rsa; "
 	  "p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAq3ZZXEzJjbHOheP9yc0b1FnulUSSYicmnbz7+Z/+OrLYp/9dIhhyEui8gWgxlMMglFJbzKSz+cs6O7wdcG53vbmabyu0ZSq6y/x6IRo8Ea+b5xZiMV504XN2TkMxFtSZPgKMWEJl4HwetEQpEpf/EuSxcV9q58CPUDPCq8RrtDRIxGZXVSfedj1i6EJilzJmgw3ujP6jnTqOgK"
