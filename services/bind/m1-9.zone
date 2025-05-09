@@ -2,7 +2,7 @@ $ORIGIN m1-9.ephec-ti.be.
 $TTL 86400
 
 @	IN	SOA	ns	admin.m1-9.ephec-ti.be. (
-				2025050601 ; serial
+				2025050801 ; serial
 				21600 ; refresh
 				3600 ; retry
 				604800 ; expire
@@ -13,11 +13,12 @@ $TTL 86400
 ns      IN      A       54.36.181.34
 ns2	IN	A	54.36.183.174
 www	150	IN	A	54.36.181.34
-www	150	IN	A	54.26.182.6
+www	150	IN	A	54.36.182.6
 www	150	IN	A	54.36.183.174
 mail    IN      A       54.36.181.34
 mail2	IN	A	54.36.182.6
 blog	IN	CNAME	www.m1-9.ephec-ti.be.
+cdn	IN 	CNAME	cl-gl27433ebe.gcdn.co.
 @       IN      MX 	10 mail.m1-9.ephec-ti.be.
 @	IN	MX	20 mail2.m1-9.ephec-ti.be.
 @	 IN 	TXT 	"v=spf1 mx -all"

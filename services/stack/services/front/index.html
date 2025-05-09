@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Woody Stuff</title>
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/htmx.org@1.9.11"
+            integrity="sha384-0gxUXCCR8yv9FM2b+U3FDbsKthCI66oH5IA9fHppQq9DDMHuMauqq1ZHBpJxQ0J0"
+            crossorigin="anonymous">
+    </script>
+    <style>
+        .htmx-indicator {
+            opacity: 0;
+            transition: opacity 500ms ease-in;
+        }
+
+        .htmx-request .htmx-indicator {
+            opacity: 1
+        }
+
+        .htmx-request.htmx-indicator {
+            opacity: 1
+        }
+    </style>
+</head>
+<body>
+<img style="position: absolute ; top:0 ; left: 0; z-index: -100;" src="/5mo.jpg" alt="image"/>
+<img src="http://cdn.m1-9.ephec-ti.be/5mo.jpg" alt="image" />
+<div class="container mx-auto px-4 mt-8">
+    <h1 class="text-3xl font-bold mb-4">Woody stuff</h1>
+
+    <table class="table-auto border-collapse w-full">
+        <thead>
+        <tr>
+            <th class="px-4 py-2 bg-gray-200 text-gray-600 border-bottom">Actions</th>
+            <th class="px-4 py-2 bg-gray-200 text-gray-600 border-bottom">Resultats</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <!--        Misc service-->
+        <tr>
+            <td class="px-4 py-2 border-bottom">
+                <button hx-get="/api/misc/time"
+                        hx-target="#data1"
+                        class="bg-red-500 text-white font-bold py-2 px-4 rounded"
+                >
+                    Short computation
+                </button>
+            </td>
+            <td class="px-4 py-2 border-bottom">
+                <div id="data1" class="border border-gray-300 p-2"></div>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="px-4 py-2 border-bottom">
+                <input type="text" id="name" name="name" placeholder="Data">
+                <button hx-get="/api/misc/heavy"
+                        hx-target="#data3"
+                        hx-include="[name='name']"
+                        hx-indicator="#spinner"
+                        class="bg-red-500 text-white font-bold py-2 px-4 rounded"
+                >
+                    Heavy Computation
+                    <img id="spinner" class="htmx-indicator" src="https://htmx.org/img/bars.svg"/>
+                </button>
+            </td>
+            <td class="px-4 py-2 border-bottom">
+                <div id="data3" class="border border-gray-300 p-2"></div>
+            </td>
+        </tr>
+
+        <!--Product service-->
+        <tr>
+            <td class="px-4 py-2 border-bottom">
+                <input type="text" id="product" name="product" placeholder="Product">
+                <button hx-get="/api/products"
+                        hx-target="#data_product"
+                        hx-include="[name='product']"
+                        hx-indicator="#spinner_product"
+                        class="bg-blue-500 text-white font-bold py-2 px-4 rounded"
+                >
+                    Add Product
+                    <img id="spinner_product" class="htmx-indicator" src="https://htmx.org/img/bars.svg"/>
+                </button>
+            <td class="px-4 py-2 border-bottom">
+                <div id="data_product" class="border border-gray-300 p-2"></div>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="px-4 py-2 border-bottom">
+                <button hx-get="api/products/last" hx-target="#data4"
+                        class="bg-blue-500 text-white font-bold py-2 px-4 rounded">
+                    Get Last product
+                </button>
+            </td>
+            <td class="px-4 py-2 border-bottom">
+                <div id="data4" class="border border-gray-300 p-2"></div>
+                <!--                <input type="text" hx-trigger="beforeRequest" hx-post="api/data4" name="data" class="mt-2 w-full border border-gray-300 px-2 py-1">-->
+            </td>
+        </tr>
+
+
+        <!--        Order service-->
+        <tr>
+            <td class="px-4 py-2 border-bottom">
+                <input type="text" id="order" name="order" placeholder="Product to buy">
+                <button hx-get="/api/orders/do"
+                        hx-target="#data_order"
+                        hx-include="[name='order']"
+                        hx-indicator="#spinner_order"
+                        class="bg-purple-500 text-white font-bold py-2 px-4 rounded"
+                >
+                    Order Product
+                    <img id="spinner_order" class="htmx-indicator" src="https://htmx.org/img/bars.svg"/>
+                </button>
+            </td>
+            <td class="px-4 py-2 border-bottom">
+                <div id="data_order" class="border border-gray-300 p-2"></div>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="px-4 py-2 border-bottom">
+                <input type="text" id="order_id" name="order_id" placeholder="order id">
+                <button hx-get="api/orders"
+                        hx-include="[name='order_id']"
+                        hx-target="#data_order_id"
+                        class="bg-purple-500 text-white font-bold py-2 px-4 rounded">
+                    Check order id
+                </button>
+            </td>
+            <td class="px-4 py-2 border-bottom">
+                <div id="data_order_id" class="border border-gray-300 p-2"></div>
+            </td>
+        </tr>
+
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
+

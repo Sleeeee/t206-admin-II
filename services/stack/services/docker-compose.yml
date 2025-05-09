@@ -1,0 +1,50 @@
+version: "3.9"
+
+services:
+  db:
+    image: slyven/woodytoys:database-1
+    deploy:
+      mode: replicated
+      replicas: 3
+    cap_add:
+      - SYS_NICE
+    restart: always
+    environment:
+      - MYSQL_DATABASE=woody
+      - MYSQL_ROOT_PASSWORD=pass
+    ports:
+      - '3306:3306'
+
+  api:
+    image: slyven/woodytoys:api-1
+    deploy:
+      mode: replicated
+      replicas: 3
+    restart: always
+    links:
+      - "db"
+
+  front:
+    image: slyven/woodytoys:front-1
+    deploy:
+      mode: replicated
+      replicas: 3
+
+  reverse:
+    image: slyven/woodytoys:rp-1
+    deploy:
+      mode: replicated
+      replicas: 3
+    ports:
+      - "8080:8080"
+    depends_on:
+      - front
+      - api
+
+  redis:
+    image: redis
+    deploy:
+      mode: replicated
+      replicas: 3
+    ports:
+      - 6379:6379

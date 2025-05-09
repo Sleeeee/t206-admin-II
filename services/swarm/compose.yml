@@ -1,0 +1,12 @@
+services:
+  bind:
+    images:
+      
+    container_name: bind
+    ports:
+      - "53:53/udp"
+      - "53:53/tcp"
+    volumes:
+      - bind_cache:/var/cache/bind
+      - ./named.conf:/etc/bind/named.conf
+      - ./m1-9.zone:/etc/bind/m1-9.zone

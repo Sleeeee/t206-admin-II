@@ -9,6 +9,7 @@ services:
       - "443:443"
     volumes:
       - ./nginx/html:/var/www/html
+      - cert:/etc/letsencrypt
     networks:
       - dmz
 
@@ -38,6 +39,7 @@ services:
       - db_net
 
 volumes:
+  cert:
   mariadb_data:
 
 networks:
