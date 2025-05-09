@@ -15,14 +15,30 @@ services:
     ports:
       - '3306:3306'
 
-  api:
-    image: slyven/woodytoys:api-1
+  api_products:
+    image: slyven/woodytoys:api_products-1
     deploy:
       mode: replicated
       replicas: 3
     restart: always
     links:
       - "db"
+
+  api_orders:
+    image: slyven/woodytoys:api_orders-1
+    deploy:
+      mode: replicated
+      replicas: 3
+    restart: always
+    links:
+      - "db"
+
+  api_misc:
+    image: slyven/woodytoys:api_misc-1
+    deploy:
+      mode: replicated
+      replicas: 3
+    restart: always
 
   front:
     image: slyven/woodytoys:front-1
@@ -39,7 +55,9 @@ services:
       - "8080:8080"
     depends_on:
       - front
-      - api
+      - api_products
+      - api_orders
+      - api_misc
 
   redis:
     image: redis
@@ -47,4 +65,4 @@ services:
       mode: replicated
       replicas: 3
     ports:
-      - 6379:6379
+      - "6379:6379"
