@@ -30,8 +30,14 @@ services:
       mode: replicated
       replicas: 3
     restart: always
+    depends_on:
+      - rabbitmq
     links:
       - "db"
+    environment:
+      - RABBITMQ_DEFAULT_USER=woody
+      - RABBITMQ_DEFAULT_PASS=pass
+      - RABBITMQ_HOST=rabbitmq
 
   api_misc:
     image: slyven/woodytoys:api_misc-1
@@ -64,5 +70,33 @@ services:
     deploy:
       mode: replicated
       replicas: 3
+
+  rabbitmq:
+    image: rabbitmq:4.1
+    deploy:
+      mode: replicated
+      replicas: 3
     ports:
-      - "6379:6379"
+      - "5672:5672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=woody
+      - RABBITMQ_DEFAULT_PASS=pass
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+
+  rabbit_worker:
+    image: slyven/woodytoys:rabbit_worker-1
+    depends_on:
+      - rabbitmq
+    deploy:
+      mode: replicated
+      replicas: 3
+    links:
+      - "db"
+    environment:
+      - RABBITMQ_DEFAULT_USER=woody
+      - RABBITMQ_DEFAULT_PASS=pass
+      - RABBITMQ_HOST=rabbitmq
+
+volumes:
+  rabbitmq_data:

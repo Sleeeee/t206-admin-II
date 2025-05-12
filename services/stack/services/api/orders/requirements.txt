@@ -1,3 +1,4 @@
 flask
 flask-cors
 mysql-connector-python
+pika

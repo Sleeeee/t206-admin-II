@@ -1,8 +1,5 @@
 from time import sleep
-from werkzeug.serving import run_simple
 from mysql.connector import connect, Error
-
-LONG_WAIT_TIME = 5  # seconds
 
 def my_connect():
     # note, c'est une mauvaise idée de recréer la connection à chaque requète
@@ -25,19 +22,13 @@ def make_heavy_validation(order):
     make_some_heavy_computation()
     return "Success"
 
-def get_order(order_id):
+def save_order(order_id, status, product):
     mydb, mycursor = my_connect()
-    query = f"SELECT status FROM woody.order WHERE order_id='{order_id}';"
+    query = f"INSERT INTO woody.order (order_id, status, product) VALUES ('{order_id}', '{status}', '{product}');"
 
     mycursor.execute(query)
-
-    order_status = mycursor.fetchone()
+    mydb.commit()
 
     mycursor.close()
     mydb.close()
-    return order_status
-
-def launch_server(app, host='0.0.0.0', port=5000):
-    # voici ce qui rend le serveur si limité ...
-    run_simple(host, port, app, use_reloader=True, threaded=False)
 
