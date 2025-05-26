@@ -3,7 +3,9 @@ services:
     image: ghcr.io/docker-mailserver/docker-mailserver:latest
     container_name: mailserver
     hostname: mail.m1-9.ephec-ti.be
-    env_file: mailserver.env
+    env_file:
+      - maildap.env # Contains only the password
+      - mailserver.env
     ports:
       - "25:25"    # SMTP
       - "143:143"  # IMAP4
@@ -23,3 +25,16 @@ services:
       test: "ss --listening --tcp | grep -P 'LISTEN.+:smtp' || exit 1"
       timeout: 3s
       retries: 0
+
+  ldap:
+    image: bitnami/openldap:latest
+    container_name: ldap
+    env_file: ldap.env
+    volumes:
+      - openldap_data:/bitnami/openldap
+      - ../../letsencrypt/:/etc/letsencrypt/
+      - ./ldap-init:/container/service/slapd/assets/config/bootstrap/ldif
+
+volumes:
+  openldap_data:
+    name: openldap_data
